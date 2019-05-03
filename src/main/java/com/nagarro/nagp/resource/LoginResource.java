@@ -22,6 +22,11 @@ public class LoginResource {
 	@Autowired
 	private UserLogin userLogin;
 	
+	/*
+	 * This method return all the users 
+	 * 
+	 * @return List of users
+	 */
 	@GetMapping("/all")
 	public List<User> login() {
 		
@@ -34,12 +39,24 @@ public class LoginResource {
 //		return "register";
 //	}
 	
+	/**
+	 * This method handle the post request to login user into the system
+	 * @param user
+	 * @return  User 
+	 */
 	@PostMapping("/")
 	public ResponseEntity<?> login(@RequestBody User user){
 		
 		return ResponseEntity.ok().body(userLogin.login(user));
 	}
 	
+	/*
+	 * This method handle post request to add an admin
+	 * 
+	 * @param user
+	 * 
+	 * @return id of created user 
+	 */
 	@PostMapping("/admin")
 	public ResponseEntity<?> saveUser(@RequestBody User user){
 		int id = userLogin.addAdmin(user);

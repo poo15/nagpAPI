@@ -1,4 +1,4 @@
-package com.nagarro.nagp.serviceimpl;
+	package com.nagarro.nagp.serviceimpl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +14,10 @@ import com.nagarro.nagp.repository.ApplicantRepository;
 import com.nagarro.nagp.repository.UserRepository;
 import com.nagarro.nagp.service.UserLogin;
 
+/**
+ * @author pooja01
+ *
+ */
 @Service
 public class UserLoginImpl implements UserLogin{
 	
@@ -26,14 +30,23 @@ public class UserLoginImpl implements UserLogin{
 	
 	private Role role = new Role();
 	
-	
-	private User user = new User();
+	/**
+     * This method find all the users 
+     * 
+     * 
+     */
 	@Override
 	public List<User> getAllusers() {
 		
 		return userRepository.findAll();
 	}
 
+	/**
+     * This method adds an admin to the system
+     * 
+     * @param User
+     * 
+     */
 	@Override
 	public int addAdmin(User user) {
 		role.setRole("ADMIN");
@@ -43,15 +56,20 @@ public class UserLoginImpl implements UserLogin{
 		return userRepository.save(user).getId();
 	}
 
-	
+	/**
+     * This method adds an applicant
+     * 
+     * @param User
+     * 
+     */
 
 	@Override
 	
-	public Object login(User user) {
-		User validUser = userRepository.find(user.getName(),user.getPassword());
+	public Object login(User applicant) {
+		User validUser = userRepository.find(applicant.getName(),applicant.getPassword());
 		if(validUser != null && validUser.getRoles().iterator().next().getRole()
 								.equalsIgnoreCase(Constants.APPLICANT)) {
-				return applicantRepository.find(Integer.parseInt(user.getName()));
+				return applicantRepository.find(Integer.parseInt(applicant.getName()));
 		}
 		return validUser;
 	}

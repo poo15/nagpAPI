@@ -25,7 +25,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("In configuration");
 		auth.userDetailsService(userDetailsService)
 		.passwordEncoder(getPasswordEncoder());
 	}
@@ -33,7 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("In configure");
 		http.csrf().disable();
 		http.authorizeRequests()
 			.antMatchers("**/secured/**").authenticated()
@@ -45,7 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	
 	private PasswordEncoder getPasswordEncoder() {
-		System.out.println("In password encoder");
 		return new PasswordEncoder() {
 			
 			@Override

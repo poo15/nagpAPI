@@ -12,7 +12,6 @@ public interface BatchService {
 	
 	boolean edit(String id, Batch batch);
 	
-	boolean delete(String id);
 	
 	Batch getBatch(String id);
 	

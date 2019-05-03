@@ -3,10 +3,8 @@ package com.nagarro.nagp.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,39 +23,56 @@ public class BatchResource {
 	
 	@Autowired
 	private BatchService batchService;
-	
+	/**
+     * This method handle the get request to find all the batches
+     * 
+     * @return List of Batches
+     */
 	@GetMapping("")
 	public List<Batch> getAllLevel(){
 		return batchService.getAllBatch();
 	}
 	
+
+	/**
+     * This method handle the get request to find a particular batch
+     * 
+     * @param id, id of the batch
+     * 
+     */
 	@GetMapping("/{id}")
 	public Batch getBatch(@PathVariable("id") String id){
-		System.out.println("batch to be searched:- "+ id);
 		return batchService.getBatch(id);
 	}
 	
+	/**
+     * This method handle the post request to adds a batch
+     * 
+     * @param Batch
+     * 
+     * @return String, Id of the book
+     * 
+     */
 	@PostMapping("")
 	public ResponseEntity<String> saveBatch(@RequestBody Batch batch){
 		String id = batchService.addBatch(batch);
 		return ResponseEntity.ok().body("batch added"+id);
 	}
 	
+	/**
+     * This method handle the Put request edit the batch record
+     * @param Batch id, Batch
+     * 
+     * @return boolean
+     */
 	@PutMapping("/{id}")
 	public ResponseEntity<String> edit(@PathVariable("id") String id, @RequestBody Batch batch){
-		System.out.println("Object to update:- "+ batch);
 		if(batchService.edit(id, batch))
 			return ResponseEntity.ok().body("Updated batch");
 		else
 			return ResponseEntity.badRequest().body("Can't update");
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") String id){
-		if(batchService.delete(id))
-		 return ResponseEntity.ok().body("deleted batch");
-		else
-			return new ResponseEntity<>("Can't delete batch", HttpStatus.NOT_FOUND);
-	}
+	
 
 }

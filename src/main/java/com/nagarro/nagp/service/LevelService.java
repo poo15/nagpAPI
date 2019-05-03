@@ -12,8 +12,6 @@ public interface LevelService {
 	
 	boolean edit(String id, Level level);
 	
-	boolean delete(String id);
-	
 	Level getLevel(String id);
 	
 	Level findIntialLevel();

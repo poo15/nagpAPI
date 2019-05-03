@@ -10,6 +10,10 @@ import com.nagarro.nagp.model.Activity;
 import com.nagarro.nagp.repository.ActivityRepository;
 import com.nagarro.nagp.service.ActivityService;
 
+/**
+ * @author pooja01
+ *
+ */
 @Service
 public class ActivityServiceImple implements ActivityService{
 
@@ -21,17 +25,41 @@ public class ActivityServiceImple implements ActivityService{
 	@Autowired
 	private LevelServiceImpl levelServiceImpl;
 	
+	/**
+     * This method get all the activities
+     * 
+     * 
+     * 
+     * @return List of Activities
+     * 
+     */
 	@Override
 	public List<Activity> getActivities() {
 		
 		return activityRepository.findAll();
 	}
 
+	/**
+     * This method find an activity
+     * 
+     * @param id- Activity id
+     * 
+     * @return Activity
+     * 
+     */
 	@Override
 	public Activity getActivity(String id) {
 		return activityRepository.find(id);
 	}
 
+	/**
+     * This method adds an activity
+     * 
+     * @param Activity 
+     * 
+     * @return Integer- Id of the activity
+     * 
+     */
 	@Override
 	public int addActivity(Activity activity) {
 		int count = activityRepository.findAll().size();
@@ -43,6 +71,7 @@ public class ActivityServiceImple implements ActivityService{
 		return saveActivity(activity) ;
 	}
 	
+	
 	private int saveActivity(Activity activity) {
 		if(checkBatchExists(activity.getBatch().getId()) && checkLevelExists(activity.getLevel().getId())){
 			activityRepository.save(activity);
@@ -51,18 +80,41 @@ public class ActivityServiceImple implements ActivityService{
 		return 0;
 	}
 
+
+	/**
+     * This method check a batch exists or not
+     * 
+     * @param Id- Batch id
+     * 
+     * @return boolean
+     * 
+     */
 	boolean checkBatchExists(String id){
 		return batchServiceImpl.getBatch(id) !=null;
 	}
-	
+	/**
+     * This method check a level exists or not
+     * 
+     * @param Id- Level id
+     * 
+     * @return boolean
+     * 
+     */
 	boolean checkLevelExists(String id){
 		return levelServiceImpl.getLevel(id) !=null;
 	}
 	
 	
+	/**
+     * This method edit an activity
+     * 
+     * @param Id- Activity id, Activity object
+     * 
+     * @return boolean
+     * 
+     */
 	@Override
 	public boolean editActivity(String id, Activity activity) {
-		System.out.println("existing activity:- "+activity.getName());
 		Activity oldActivity = activityRepository.find(id);
 			if(oldActivity != null) {
 				activity.setLevel(oldActivity.getLevel());
@@ -74,9 +126,16 @@ public class ActivityServiceImple implements ActivityService{
 		return false;
 	}
 
+	/**
+     * This method find all the activity of level and batch 
+     * 
+     * @param Id- Level id, Id- Batch id
+     * 
+     * @return List of Activities
+     * 
+     */
 	@Override
 	public List<Activity> getBatchLevelActivities(String levelId, String batchId) {
-		System.out.println("In get batch level act service:- "+levelId+" "+batchId);
 		return activityRepository.findByLevelBatch(levelId, batchId);
 	}
 

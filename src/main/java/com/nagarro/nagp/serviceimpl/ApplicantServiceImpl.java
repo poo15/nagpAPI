@@ -14,6 +14,10 @@ import com.nagarro.nagp.model.User;
 import com.nagarro.nagp.repository.ApplicantRepository;
 import com.nagarro.nagp.repository.UserRepository;
 import com.nagarro.nagp.service.ApplicantService;
+/**
+ * @author pooja01
+ *
+ */
 @Service
 public class ApplicantServiceImpl implements ApplicantService{
 
@@ -30,19 +34,30 @@ public class ApplicantServiceImpl implements ApplicantService{
 	@Autowired
 	private LevelServiceImpl levelServiceImpl;
 	
-	@Autowired
-	private ActivityRecordServiceImpl recordsServiceImpl;
 	private Role role = new Role();
 	
 	
 	private User user = new User();
 	
-	
+	/**
+     * This method get all the applicants
+     * 
+     * @return List of Applicants
+     * 
+     */
 	@Override
 	public List<Applicant> getAllApplicant() {
 		return applicantRepository.findAll();
 	}
 
+	
+	/**
+     * This method find a particular applicant
+     * 
+     * @param id
+     * 
+     * @return Applicant
+     */
 	@Override
 	public Applicant getApplicant(int id) {
 		Applicant currentApplicant = applicantRepository.find(id);
@@ -52,6 +67,12 @@ public class ApplicantServiceImpl implements ApplicantService{
 			return null;
 	}
 
+	/**
+     * This method add an applicant
+     * 
+     * @param Applicant
+     * 
+     */
 	@Override
 	public int addApplicant(Applicant applicant) {
 		if(checkBatchExists(applicant.getBatch().getId())){
@@ -72,15 +93,38 @@ public class ApplicantServiceImpl implements ApplicantService{
 	}
 
 	
-	
+	/**
+     * This method check a batch exists or not
+     * 
+     * @param Id- Batch id
+     * 
+     * @return boolean
+     * 
+     */
 	boolean checkBatchExists(String id){
 			return batchServiceImpl.getBatch(id) !=null;
 	}
 	
+	/**
+     * This method check a level exists or not
+     * 
+     * @param Id- Level id
+     * 
+     * @return boolean
+     * 
+     */
 	boolean checkLevelExists(String id){
 		return levelServiceImpl.getLevel(id) !=null;
 	}
 	
+	/**
+     * This method edit a particular applicant
+     * 
+     * @param Id- applicant Id, Applicant
+     * 
+     * @return boolean
+     * 
+     */
 	@Override
 	public boolean editApplicant(int id, Applicant applicant) {
 		Applicant currentAplicant = applicantRepository.find(id);

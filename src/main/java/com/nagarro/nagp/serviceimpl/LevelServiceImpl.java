@@ -11,19 +11,34 @@ import com.nagarro.nagp.model.Level;
 import com.nagarro.nagp.repository.LevelRepository;
 import com.nagarro.nagp.service.LevelService;
 
+/**
+ * @author pooja01
+ *
+ */
 @Service
 public class LevelServiceImpl implements LevelService{
 	
 	@Autowired
 	private LevelRepository levelRepository;
 	
-
+	/**
+     * This method get all the levels
+     * 
+     * @return List of levels
+     * 
+     */
 	@Override
 	public List<Level> getAllLevels() {
 		return levelRepository.findAll();
 	}
 
-
+	/**
+     * This method adds level
+     * 
+     * @param Level
+     * 
+     * @return String , id of the level
+     */
 	@Override
 	public String addLevel(Level level) {
 		if(level.getId() == null || level.getId().equals("")) {
@@ -32,7 +47,13 @@ public class LevelServiceImpl implements LevelService{
 		return levelRepository.save(level).getId();
 	}
 
-
+	/**
+     * This method edit a level
+     * 
+     * @param Id of level, Level object
+     * 
+     * @return boolean
+     */
 	@Override
 	public boolean edit(String id, Level level) {
 		if(levelRepository.find(id) != null) {
@@ -45,17 +66,13 @@ public class LevelServiceImpl implements LevelService{
 		return true;
 	}
 
-
-	@Override
-	public boolean delete(String id) {
-//		if(levelRepository.find(id) != null) {
-//			levelRepository.deleteById(id);
-//		} else {
-//			return false;
-//		}
-		return true;
-	}
-
+	/**
+     * This method get a particular level
+     * 
+     * @param Id of the level
+     * 
+     * @return Level object
+     */
 
 	@Override
 	public Level getLevel(String id) {
@@ -66,6 +83,12 @@ public class LevelServiceImpl implements LevelService{
 	}
 
 
+	/**
+     * This method find the initial level
+     * 
+     * @return Level 
+     * 
+     */
 	@Override
 	public Level findIntialLevel() {
 		Optional<Level> levels = levelRepository.findLevel(1);

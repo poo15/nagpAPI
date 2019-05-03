@@ -19,6 +19,11 @@ public class NotificationResource {
 	@Autowired
 	private NotificationService notificationService;
 	
+	/**
+     * This method takes the get request to get all the notifications for the admin
+     * 
+     * @return List of notifications
+     */
 	@GetMapping("")
 	public List <Notification> getNotification(){
 		return notificationService.getUserNotifications();
